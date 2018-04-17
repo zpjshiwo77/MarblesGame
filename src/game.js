@@ -13,6 +13,7 @@ pageInit();
 
 //laya场景初始化
 function layaInit(){
+	Laya.MiniAdpter.init();
 	Laya.init(750, 1206,Laya.WebGL);
 	Laya.stage.scaleMode = "noborder";
 	Laya.stage.alignH = "center";
