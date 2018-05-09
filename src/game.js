@@ -51,7 +51,7 @@ function UIinit(){
 	ball.Xforce = 0;					//球水平方向的受力状况
 	ball.Yforce = 0;					//球垂直方向的受力状况
 	arrow.ui = iUI.arrow;
-	arrow.elasticity = 30;				//控制物的弹力系数  建议值 20 - 60  60时无动能损失
+	arrow.elasticity = 0.5;				//控制物的弹力系数  建议值 0 - 1  1时无动能损失
 	arrow.speed = 0;
 	arrow.rotationLimit = 25;
 	// arrow.ui.rotation = -30;
@@ -64,7 +64,7 @@ function initObstacles(){
 	for (var i = 0; i < iUI.Obstacles._childs.length; i++) {
 		var item = {};
 		item.ui = iUI.Obstacles._childs[i];
-		item.elasticity = 40;
+		item.elasticity = 0.7;
 		item.score = 30;
 		obstacles.push(item);	
 	}
@@ -78,17 +78,17 @@ function addSquares(){
 		var item = {};
 		item.ui = iUI.squares._childs[i];
 		if(item.ui.name == "red"){
-			item.elasticity = 40;
+			item.elasticity = 0.7;
 			item.score = 40;
 			item.hitTimes = 1;
 		}
 		else if(item.ui.name == "green"){
-			item.elasticity = 45;
+			item.elasticity = 0.8;
 			item.score = 50;
 			item.hitTimes = 2;
 		}
 		else if(item.ui.name == "purple"){
-			item.elasticity = 50;
+			item.elasticity = 0.9;
 			item.score = 60;
 			item.hitTimes = 3;
 		}
@@ -280,19 +280,19 @@ function Counterforce(ele, res){
 		Yforce:0
 	};
 
-	var rotateDir = ele.ui.rotation > 0 ? 1 : -1;								//旋转方向
-	var rotation = Math.abs(ele.ui.rotation); 									//不带方向的旋转角度
-	var deg = imath.convertAngle(rotation);										//不带方向的旋转弧度
-	var sinDeg = Math.sin(deg);													//正弦
-	var cosDeg = Math.cos(deg);													//余弦
-	var XdirF = ball.Xspeed * ball.quality * ele.elasticity;					//X方向所产生的反作用力
-	var YdirF = ball.Yspeed * ball.quality * ele.elasticity - imath.gravity;	//Y方向所产生的反作用力
-	var XdpsF = {																//X方向的实际反作用力（坐标系为物体旋转后的坐标系）
-		force: 0,																//力
-		xdir: 0,																//x方向
-		ydir: 0,																//y方向
+	var rotateDir = ele.ui.rotation > 0 ? 1 : -1;											//旋转方向
+	var rotation = Math.abs(ele.ui.rotation); 												//不带方向的旋转角度
+	var deg = imath.convertAngle(rotation);													//不带方向的旋转弧度
+	var sinDeg = Math.sin(deg);																//正弦
+	var cosDeg = Math.cos(deg);																//余弦
+	var XdirF = ball.Xspeed * ball.quality * ele.elasticity / 0.0167;						//X方向所产生的反作用力
+	var YdirF = ball.Yspeed * ball.quality * ele.elasticity / 0.0167 - imath.gravity;		//Y方向所产生的反作用力
+	var XdpsF = {																			//X方向的实际反作用力（坐标系为物体旋转后的坐标系）
+		force: 0,																			//力
+		xdir: 0,																			//x方向
+		ydir: 0,																			//y方向
 	};
-	var YdpsF = {																//Y方向的实际反作用力（坐标系为物体旋转后的坐标系）
+	var YdpsF = {																			//Y方向的实际反作用力（坐标系为物体旋转后的坐标系）
 		force: 0,
 		xdir: 0,
 		ydir: 0
