@@ -5,6 +5,7 @@ var obstacles = [];
 var squares = {};
 var scoreBox,score = 0;
 
+//test
 //页面初始化
 function pageInit(){
 	layaInit();
